@@ -157,11 +157,10 @@ AUTHENTICATION_BACKENDS = [
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
+# 인증 메서드 방식
+ACCOUNT_LOGIN_METHODS = {'email'}
 
-# 유저 식별을 이메일로 할 것인지 설정
-# 네이버에서 이메일 정보를 반드시 받아오도록 강제
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_USERNAME_REQUIRED = False
-# 아이디 대신 이메일을 로그인의 핵심 수단으로 쓴다는 의미
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
+# 유저 식별 설정
+# 아래 한 줄로 통합(최신 버전)
+ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*', 'password2*']
 # 네이버 로그인 연동/

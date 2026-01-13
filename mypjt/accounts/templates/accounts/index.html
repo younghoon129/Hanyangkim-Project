@@ -1,0 +1,31 @@
+<!-- {% load socialaccount %} allauth 라이브러리가 제공하는 특수 태그 -->
+<!-- provider_login_url 사용하기 위해 템플릿 최상단에 반드시 작성 -->
+{% load socialaccount %} <!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>발바닥 프로젝트</title>
+</head>
+<body>
+    <h1>👣 발바닥 프로젝트 테스트</h1>
+    <hr>
+
+    {% if user.is_authenticated %}
+        <p>환영합니다, <b>{{ user.username }}</b>님!</p>
+        <p>이메일: {{ user.email }}</p>
+        
+        <form method="post" action="{% url 'account_logout' %}">
+            {% csrf_token %}
+            <button type="submit">로그아웃</button>
+        </form>
+    {% else %}
+        <p>현재 로그인이 필요합니다.</p>
+        {% comment %} {% provider_login_url 'naver' %}은 settings.py 에 등록한 네이버 설정을 찾아 자동으로 로그인 URL 생성 {% endcomment %}
+        {% comment %} process='login': 신규 가입이 아닌 기존 계정으로 로그인 시도할 때 사용하는 옵션 {% endcomment %}
+        <a href="{% provider_login_url 'naver' process='login' %}">
+            <img src="https://static.nid.naver.com/oauth/small_g_in.PNG" alt="네이버 로그인">
+        </a>
+
+        {% endif %}
+</body>
+</html>

@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # allauth 패키지 안에 미리 만들어진 수십 개의 URL 경로 들어있음
     path('accounts/', include('allauth.urls')),
+    path('', include('accounts.urls')),
 ]
