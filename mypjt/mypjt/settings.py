@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     # 네이버와 통신할 수 있는 전용 어댑터
     'allauth.socialaccount.providers.naver',
+    # 카카오버전
+    'allauth.socialaccount.providers.kakao',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -55,6 +57,23 @@ INSTALLED_APPS = [
 ]
 
 SITE_ID = 1
+
+SOCIALACCOUNT_PROVIDERS = {
+    'kakao': {
+        'APP': {
+            'client_id': env('KAKAO_CLIENT_ID'),
+            'secret': env('KAKAO_CLIENT_SECRET'),
+            'key': ''
+        }
+    },
+    'naver': {
+        'APP': {
+            'client_id': env('NAVER_CLIENT_ID'),
+            'secret': env('NAVER_CLIENT_SECRET'),
+            'key': ''
+        }
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -144,23 +163,29 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'accounts.User'
 
 
-# /네이버 로그인 연동
+# /소셜 로그인 연동
 # Django는 아이디/비밀번호 방식만 알고 있음.
 # 소셜 로그인이라는 새로운 창구를 확인하는 설정
 # 사용자가 로그인을 시도하면 아래 목록에 있는 방식들을 순서대로 확인 및 유효한 유저인지 판단
 AUTHENTICATION_BACKENDS = [
+    # 기존의 아이디/비밀번호 방식 처리
     'django.contrib.auth.backends.ModelBackend',
+    # 소셜 로그인 방식 처리
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
-# 로그인 후 리다이렉트 경로 (기획에 맞게 수정 가능)
+# 로그인, 로그아웃 후 리다이렉트 경로 (기획에 맞게 수정 가능)
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
-# 인증 메서드 방식
+# 인증 메서드 방식(이메일을 기본 식별자로 사용)
 ACCOUNT_LOGIN_METHODS = {'email'}
 
-# 유저 식별 설정
+# 유저 식별 설정(모든 소셜 프로바이더에 동일하게 적용)
 # 아래 한 줄로 통합(최신 버전)
 ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*', 'password2*']
-# 네이버 로그인 연동/
+# 소셜 로그인 연동/
+
+# 이메일이 같으면 기존 계정에 소셜 계정을 자동으로 연결(소셜 계정 통합)
+SOCIALACCOUNT_ADAPTER = 'allauth.socialaccount.adapter.DefaultSocialAccountAdapter'
+SOCIALACCOUNT_AUTO_SIGNUP = True
