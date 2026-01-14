@@ -36,6 +36,8 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'accounts',
     'runs',
+    # 백, 프론트 통신
+    'corsheaders',
     # 하나의 서버에서 여러 웹사이트를 운영할 수 있는 기능
     'django.contrib.sites',
     # 어떤 도메인(예: localhot 또는 실제 도메인)에서 로그인 일어나는지 관리
@@ -48,6 +50,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.naver',
     # 카카오버전
     'allauth.socialaccount.providers.kakao',
+    # 구글버전
+    'allauth.socialaccount.providers.google',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -58,6 +62,7 @@ INSTALLED_APPS = [
 
 SITE_ID = 1
 
+# 관리자페이지 설정 안해도 됨
 SOCIALACCOUNT_PROVIDERS = {
     'kakao': {
         'APP': {
@@ -72,12 +77,22 @@ SOCIALACCOUNT_PROVIDERS = {
             'secret': env('NAVER_CLIENT_SECRET'),
             'key': ''
         }
-    }
+    },
+    'google': {
+        'APP': {
+            'client_id': '방금_복사한_클라이언트_ID',
+            'secret': '방금_복사한_보안_비밀번호',
+            'key': ''
+        },
+        'SCOPE': ['profile', 'email'],
+        'AUTH_PARAMS': {'access_type': 'online'}
+    },
 }
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
