@@ -80,8 +80,8 @@ SOCIALACCOUNT_PROVIDERS = {
     },
     'google': {
         'APP': {
-            'client_id': '방금_복사한_클라이언트_ID',
-            'secret': '방금_복사한_보안_비밀번호',
+            'client_id': env('GOOGLE_CLIENT_ID'),
+            'secret': env('GOOGLE_CLIENT_SECRET'),
             'key': ''
         },
         'SCOPE': ['profile', 'email'],
@@ -204,3 +204,12 @@ ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*', 'password2*']
 # 이메일이 같으면 기존 계정에 소셜 계정을 자동으로 연결(소셜 계정 통합)
 SOCIALACCOUNT_ADAPTER = 'allauth.socialaccount.adapter.DefaultSocialAccountAdapter'
 SOCIALACCOUNT_AUTO_SIGNUP = True
+
+
+# 특정 앱에 속하지 않은, 프로젝트 전체에서 공통으로 사용할 정적 파일 경로
+STATICFILES_DIRS = [
+    BASE_DIR / 'static', 
+]
+# 배포(Production) 시 모든 정적 파일을 한곳으로 모을 디렉토리 (개발 단계에선 필수는 아님)
+# 'python manage.py collectstatic' 명령을 실행하면 이 경로로 모든 파일이 모입니다.
+STATIC_ROOT = BASE_DIR / 'staticfiles'

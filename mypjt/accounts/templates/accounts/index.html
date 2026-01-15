@@ -1,5 +1,7 @@
 <!-- {% load socialaccount %} allauth 라이브러리가 제공하는 특수 태그 -->
 <!-- provider_login_url 사용하기 위해 템플릿 최상단에 반드시 작성 -->
+{% load socialaccount %}
+{% load static %}
 {% load socialaccount %} <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -27,6 +29,9 @@
         </a>
         <a href="{% provider_login_url 'kakao' process='login' %}">
             <img src="https://developers.kakao.com/tool/resource/static/img/button/login/full/ko/kakao_login_medium_narrow.png" alt="카카오 로그인">
+        </a>
+        <a href="{% provider_login_url 'google' process='login' %}">
+            <img src="{% static 'images/google_btn_white.png' %}" alt="구글 로그인" style="height: 45px;">
         </a>
         {% endif %}
 </body>
