@@ -52,6 +52,13 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.kakao',
     # 구글버전
     'allauth.socialaccount.providers.google',
+    # DRF 관련 (API 통신을 위한 기반)
+    'rest_framework',
+    'rest_framework.authtoken', # dj-rest-auth의 토큰 인증에 필요
+    # dj-rest-auth(API용 인증 시스템)
+    'dj_rest_auth',
+    'dj_rest_auth.registration', # 소셜 회원가입/로그인용
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -208,7 +215,7 @@ SOCIALACCOUNT_AUTO_SIGNUP = True
 
 # 특정 앱에 속하지 않은, 프로젝트 전체에서 공통으로 사용할 정적 파일 경로
 STATICFILES_DIRS = [
-    BASE_DIR / 'static', 
+    BASE_DIR / 'static',
 ]
 # 배포(Production) 시 모든 정적 파일을 한곳으로 모을 디렉토리 (개발 단계에선 필수는 아님)
 # 'python manage.py collectstatic' 명령을 실행하면 이 경로로 모든 파일이 모입니다.
